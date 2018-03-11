@@ -12,7 +12,6 @@ gem 'slack-ruby-bot'
 gem 'celluloid-io'
 
 gem 'activesupport'
-gem 'slack-api'
 gem 'esa'
 
 gem 'octokit'
