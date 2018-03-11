@@ -15,5 +15,7 @@ gem 'activesupport'
 gem 'slack-api'
 gem 'esa'
 
+gem 'octokit'
+
 gem 'pry'
 gem 'pry-byebug'
