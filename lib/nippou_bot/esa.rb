@@ -4,6 +4,7 @@ require 'yaml'
 module NippouBot
   class Esa
     def self.ship_it!(md_text)
+      Time.zone = ENV['TIME_ZONE'] || 'UTC'
       client = ::Esa::Client.new(access_token: ENV['ESA_ACCESS_TOKEN'], current_team: ENV['ESA_TEAM_NAME'])
       date = Time.zone.now
       data = {
@@ -71,9 +72,5 @@ module NippouBot
     end
 
   end
-end
-
-if __FILE__ == $0
-  puts NippouBot::Esa.today_todo
 end
 
