@@ -1,6 +1,6 @@
 ## 本日の作業内容
 
-<%- reports[:github_events].each do |event| -%>
+<%- reports["github_events"].each do |event| -%>
 [<%= event[:type] %>] [<%= event[:title] %>](<%= event[:url] %>)
 <%- end -%>
 

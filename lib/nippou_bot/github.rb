@@ -3,6 +3,7 @@ require 'octokit'
 module NippouBot
   class Github
     def self.events
+      Time.zone = ENV['TIME_ZONE'] || 'UTC'
       client = Octokit::Client.new(login: ENV['GITHUB_ID'], access_token: ENV['GITHUB_ACCESS_TOKEN'])
 
       events = client.user_events(ENV['GITHUB_ID'])
