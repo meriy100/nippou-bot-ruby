@@ -22,7 +22,13 @@ module NippouBot
         if next_story = stories.find { |s| s['id'] == story['id'] + 1 }
           next_story['message']
         else
-          'Ending'
+          nippou = []
+          messages[-10..-1].each_cons(2) do |first, second|
+            if s = stories.find { |s| first['user'] == ENV['BOT_USER_ID'] && s['message'].match(first['text']) }
+              nippou.push(bot: s, body: second['text'])
+            end
+          end
+          nippou
         end
       else
         'Nothing'
