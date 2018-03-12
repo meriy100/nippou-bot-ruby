@@ -1,5 +1,7 @@
 require 'slack'
 require 'yaml'
+require 'active_support'
+require 'active_support/core_ext'
 
 Slack.configure do |config|
   config.token = ENV['SLACK_API_TOKEN']
@@ -15,23 +17,33 @@ module NippouBot
       @channels ||= @client.channels_list["channels"]
     end
 
-    def conversations_history_lasted(channel_id, ts)
-      messages = @client.conversations_history(channel: channel_id)['messages'].reverse
-      message = messages.select { |m| m['user'] == ENV['BOT_USER_ID'] }.last
+    def messages(channel_id)
+       @client.conversations_history(channel: channel_id)['messages']
+    end
+
+    def get_reports(channel_id, ts)
+      reports = []
+      messages(channel_id).each_cons(2) do |user, bot|
+        if s = stories.find { |s| bot['user'] == ENV['BOT_USER_ID'] && s['message'].match(bot['text']) }
+          reports.push( s.merge('text' => user['text']) )
+        end
+      end
+      reports.each.with_object({}) do |report, ob|
+        next if ob[report['type']].present?
+        ob[report['type']] = report
+      end
+    end
+
+    def next_message(channel_id, ts)
+      message = messages(channel_id).select { |m| m['user'] == ENV['BOT_USER_ID'] }.first
       if story = stories.find { |s| s['message'].match(message['text']) }
         if next_story = stories.find { |s| s['id'] == story['id'] + 1 }
           next_story['message']
         else
-          nippou = []
-          messages[-10..-1].each_cons(2) do |first, second|
-            if s = stories.find { |s| first['user'] == ENV['BOT_USER_ID'] && s['message'].match(first['text']) }
-              nippou.push(bot: s, body: second['text'])
-            end
-          end
-          nippou
+          :end
         end
       else
-        'Nothing'
+        :nothing
       end
     end
 

@@ -1,6 +1,12 @@
 - id: 1
+  type: todays_works
   message: '本日の作業内容を教えてください'
 - id: 2
+  type: issues
   message: '何か問題はありましたか'
 - id: 3
+  type: leaning
+  message: '学んだことはありますか'
+- id: 4
+  type: tomorrow_works
   message: '明日の作業予定を教えてください'

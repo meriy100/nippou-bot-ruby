@@ -2,7 +2,6 @@ require 'slack-ruby-bot'
 
 require 'pry'
 
-require './lib/nippou_bot/slack'
 
 module NippouBot
   class Engine < SlackRubyBot::Bot
@@ -15,7 +14,17 @@ module NippouBot
     end
 
     scan(/(.*)/) do |client, data, match|
-      client.say(text: NippouBot::SlackAPI.new.conversations_history_lasted(data.channel, data.ts), channel: data.channel)
+      next_message = NippouBot::SlackAPI.new.next_message(data.channel, data.ts)
+      case next_message
+      when :end
+        reports = NippouBot::SlackAPI.new.get_reports(data.channel, data.ts)
+        md = NippouBot::Generator.generate(reports)
+        client.say(text: md, channel: data.channel)
+      when :nothing
+        client.say(text: "Nothing", channel: data.channel)
+      else
+        client.say(text: next_message, channel: data.channel)
+      end
     end
   end
 end
