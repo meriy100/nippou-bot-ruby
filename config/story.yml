@@ -10,3 +10,6 @@
 - id: 4
   type: tomorrow_works
   message: '明日の作業予定を教えてください'
+- id: 5
+  type: shokan
+  message: '所感'
