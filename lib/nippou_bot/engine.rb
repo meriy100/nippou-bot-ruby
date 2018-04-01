@@ -11,7 +11,7 @@ module NippouBot
 
     command 'info' do |client, data, _|
       begin
-        client.say(text: message, channel: data.channel)
+        client.say(text: info_message, channel: data.channel)
       rescue => e
         client.say(text: e, channel: data.channel)
       end
