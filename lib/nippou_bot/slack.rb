@@ -21,6 +21,15 @@ module NippouBot
        @client.conversations_history(channel: channel_id)['messages']
     end
 
+    def users
+      @client.users_list['members'].map do |user|
+        {
+          id: user['id'],
+          name: user['name']
+        }
+      end
+    end
+
     def get_reports(channel_id, ts)
       reports = []
       messages(channel_id).each_cons(2) do |user, bot|
