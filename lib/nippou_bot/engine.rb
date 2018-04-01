@@ -44,7 +44,7 @@ module NippouBot
 
     private
 
-    def info_message
+    def self.info_message
 <<EOS
 users: #{NippouBot::SlackAPI.new.users}
 EOS
