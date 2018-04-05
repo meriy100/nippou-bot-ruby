@@ -1,0 +1,9 @@
+db:
+  development:
+    adapter:  mysql2
+    host:     localhost
+    encoding: utf8
+    username: root
+    password: root
+    database: nippou_bot_ruby
+    pool: 5
