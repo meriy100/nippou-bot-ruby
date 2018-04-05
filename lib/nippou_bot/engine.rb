@@ -38,7 +38,6 @@ module NippouBot
           client.say(text: next_message, channel: data.channel)
         end
       rescue => e
-        binding.pry
         client.say(text: "エラーが発生しました\n#{e}", channel: data.channel)
       end
     end
