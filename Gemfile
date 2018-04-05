@@ -22,3 +22,4 @@ gem 'pry'
 gem 'pry-byebug'
 
 gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'pg'

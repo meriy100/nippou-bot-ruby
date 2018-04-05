@@ -7,3 +7,11 @@ db:
     password: root
     database: nippou_bot_ruby
     pool: 5
+  produciton:
+    adapter:  pg
+    host:     localhost
+    encoding: utf8
+    username: root
+    password:
+    database: nippou_bot_ruby
+    pool: 5
