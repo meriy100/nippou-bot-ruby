@@ -33,7 +33,7 @@ module NippouBot
     def get_reports(channel_id, ts)
       reports = []
       messages(channel_id).each_cons(2) do |user, bot|
-        if s = stories.find { |s| bot['user'] == ENV['BOT_USER_ID'] && s['message'].match(bot['text']) }
+        if s = stories.find { |s| bot['user'] == ENV['BOT_USER_ID'] && s['message'].chomp == bot['text'].chomp }
           reports.push( s.merge('text' => user['text']) )
         end
       end
@@ -45,7 +45,7 @@ module NippouBot
 
     def next_message(channel_id, ts)
       message = messages(channel_id).select { |m| m['user'] == ENV['BOT_USER_ID'] }.first
-      if story = stories.find { |s| s['message'].match(message['text']) }
+      if story = stories.find { |s| s['message'].chomp == message['text'].chomp }
         if next_story = stories.find { |s| s['id'] == story['id'] + 1 }
           next_story['message']
         else
