@@ -9,7 +9,6 @@ db:
     pool: 5
   produciton:
     adapter:  postgresql
-    host:     localhost
     encoding: utf8
     username: root
     password:
