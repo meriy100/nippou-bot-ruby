@@ -14,3 +14,4 @@ db:
     password:
     database: nippou_bot_ruby
     pool: 5
+    host: /var/run/postgresq
