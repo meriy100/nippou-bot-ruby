@@ -8,7 +8,7 @@ db:
     database: nippou_bot_ruby
     pool: 5
   produciton:
-    adapter:  pg
+    adapter:  postgresql
     host:     localhost
     encoding: utf8
     username: root
