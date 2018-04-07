@@ -1,3 +1,3 @@
 require './lib/nippou_bot'
 
-run NippouBot::Engine.run
+run NippouBot::Engine
