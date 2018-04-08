@@ -5,7 +5,7 @@ require 'pry'
 
 module NippouBot
   class Engine < SlackRubyBot::Bot
-    command 'report start' do |client, data, _|
+    command 'start' do |client, data, _|
       begin
         User.find_by!(slack_user: data['user'])
         client.say(text: '本日の作業内容を教えてください', channel: data.channel)
@@ -14,7 +14,7 @@ module NippouBot
       end
     end
 
-    command 'report info' do |client, data, _|
+    command 'info' do |client, data, _|
       begin
         client.say(text: info_message, channel: data.channel)
       rescue => e
@@ -22,7 +22,7 @@ module NippouBot
       end
     end
 
-    command 'report ping' do |client, data, _|
+    command 'ping' do |client, data, _|
       client.say(text: 'pong', channel: data.channel)
     end
 
@@ -37,24 +37,23 @@ module NippouBot
 
     scan(/(.*)/) do |client, data, _|
       begin
-        user = User.find_by!(slack_user: data['user'])
         next_message = NippouBot::SlackAPI.new.next_message(data.channel, data.ts)
         case next_message
         when :end
-          reports = NippouBot::SlackAPI.new.get_reports(data.channel, data.ts)
-          github_events = NippouBot::Github.events
-          reports['github_events'] = github_events
+          user = User.find_by!(slack_user: data['user'])
+          reports = NippouBot::SlackAPI.new.get_reports(data.channel, data.ts, data.user)
           md = NippouBot::Generator.generate(reports)
           url = NippouBot::Esa.ship_it!(md, user)
           client.say(text: url, channel: data.channel)
         when :nothing
         else
+          user = User.find_by!(slack_user: data['user'])
           client.say(text: next_message, channel: data.channel)
         end
       rescue ActiveRecord::RecordNotFound => e
         client.say(text: "ユーザー情報をセット してください.\nreport user_set $ESA_TOKEN $ESA_NAME", channel: data.channel)
       rescue => e
-        client.say(text: "エラーが発生しました\n#{e}", channel: data.channel)
+        client.say(text: "エラーが発生しました\n#{e}\n#{e.backtrace.join("\n")}", channel: data.channel)
       end
     end
 

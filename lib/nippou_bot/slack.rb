@@ -14,6 +14,7 @@ module NippouBot
     end
 
     def channels
+      binding.pry
       @channels ||= @client.channels_list["channels"]
     end
 
@@ -30,11 +31,18 @@ module NippouBot
       end
     end
 
-    def get_reports(channel_id, ts)
+    def get_reports(channel_id, ts, user)
       reports = []
+      # messages(channel_id).each_with_object([]) do |message, result|
+      #   case message['user']
+      #   when ENV['BOT_USER_ID']
+      #   when user
+      #     reslt.last.push(message)
+      #   end
+      # end
       messages(channel_id).each_cons(2) do |user, bot|
         if s = stories.find { |s| bot['user'] == ENV['BOT_USER_ID'] && s['message'].chomp == bot['text'].chomp }
-          reports.push( s.merge('text' => user['text']) )
+          reports.push(s.merge('text' => user['text']))
         end
       end
       reports.each.with_object({}) do |report, ob|

@@ -2,3 +2,4 @@ vendor/bundle
 config/env.yml
 .env
 .bundle
+log/*
