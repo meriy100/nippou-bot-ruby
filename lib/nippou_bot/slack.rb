@@ -19,7 +19,7 @@ module NippouBot
     end
 
     def messages(channel_id)
-       @client.conversations_history(channel: channel_id)['messages']
+       @messages ||= @client.conversations_history(channel: channel_id)['messages']
     end
 
     def users
@@ -29,6 +29,10 @@ module NippouBot
           name: user['name']
         }
       end
+    end
+
+    def reporting?(channel_id, user)
+      messages(channel_id).select{|m| [ENV['BOT_USER_ID'], user].include?(m['user'])}
     end
 
     def get_reports(channel_id, ts, user)
