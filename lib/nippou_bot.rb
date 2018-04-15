@@ -17,6 +17,7 @@ db_conf = YAML.load(ERB.new(File.read('./config/database.yml')).result)
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || db_conf['db'][ENV['ENV']])
 # ActiveRecord::Base.logger = Logger.new("log/database.log")
 
+require './lib/nippou_bot/nippou_command'
 require './lib/nippou_bot/engine'
 require './lib/nippou_bot/slack'
 require './lib/nippou_bot/generator'
