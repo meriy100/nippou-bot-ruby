@@ -11,7 +11,7 @@ module NippouBot
         name:       "#{user.esa_name}",
         body_md:    md_text,
         tags:       ['nippou_gen'],
-        category:   "日報/#{date.year}/#{date.month}/#{date.day}",
+        category:   date.strftime('日報/%Y/%m/%d'),
         wip:        false,
         message:    '日報を書いたよ',
         #updated_by: 'esa_bot'
