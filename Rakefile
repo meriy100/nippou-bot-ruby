@@ -17,7 +17,7 @@ task :environment do
   db_conf = YAML.load( ERB.new( File.read("./config/database.yml") ).result )
 
   # `rake ENV=development`/`rake ENV=production`で切り替え可能
-  ActiveRecord::Base.establish_connection( db_conf["db"][ENV["ENV"]] )
+  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || db_conf["db"][ENV["ENV"]])
   # ActiveRecord::Base.logger = Logger.new("log/database.log")
 end
 
