@@ -8,8 +8,8 @@ db:
     database: nippou_bot_ruby
     pool: 5
   production:
-    adapter:  postgresql
+    adapter: postgresql
     encoding: unicode
     database: nippou_bot_ruby
     pool: 5
-    host: /var/run/postgresql
+    host: <%= ENV['DATABASE_URL'] %>
