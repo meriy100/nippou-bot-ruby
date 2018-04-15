@@ -7,7 +7,7 @@ db:
     password: root
     database: nippou_bot_ruby
     pool: 5
-  produciton:
+  production:
     adapter:  postgresql
     encoding: utf8
     username: root
