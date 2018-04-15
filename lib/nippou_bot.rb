@@ -12,6 +12,8 @@ Envyable.load('config/env.yml')
 Time.zone = ENV['TIME_ZONE'] || 'UTC'
 
 db_conf = YAML.load(ERB.new(File.read('./config/database.yml')).result)
+puts db_conf
+puts db_conf['db'][ENV['ENV']]
 
 # `rake ENV=development`/`rake ENV=production`で切り替え可能
 ActiveRecord::Base.establish_connection(db_conf['db'][ENV['ENV']])
