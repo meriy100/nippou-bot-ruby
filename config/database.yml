@@ -10,8 +10,5 @@ db:
   production:
     adapter:  postgresql
     encoding: utf8
-    username: root
-    password:
     database: nippou_bot_ruby
     pool: 5
-    socket: /var/run/postgresql/.s.PGSQL.5432
