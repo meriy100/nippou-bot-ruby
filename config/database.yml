@@ -9,6 +9,7 @@ db:
     pool: 5
   production:
     adapter:  postgresql
-    encoding: utf8
+    encoding: unicode
     database: nippou_bot_ruby
     pool: 5
+    host: /var/run/postgresql
